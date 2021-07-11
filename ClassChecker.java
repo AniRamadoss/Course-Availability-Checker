@@ -145,25 +145,25 @@ public class ClassChecker {
     /**
      * Logs into VT. Not currently used but may be useful in the future.
      */
-    public void login() {
-        driver.navigate().to(
-            "https://banweb.banner.vt.edu/ssomanager_prod/c/SSB");
-        Scanner logins = null;
-        try {
-            logins = new Scanner(new File(
-                "hokiespa_username_and_password.txt"));
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String user = logins.nextLine();
-        String pass = logins.nextLine();
-
-        WebElement username = driver.findElement(By.name("j_username"));
-        WebElement password = driver.findElement(By.name("j_password"));
-        WebElement login = driver.findElement(By.name("_eventId_proceed"));
-        username.sendKeys(user);
-        password.sendKeys(pass);
-        login.click();
-    }
+//    public void login() {
+//        driver.navigate().to(
+//            "https://banweb.banner.vt.edu/ssomanager_prod/c/SSB");
+//        Scanner logins = null;
+//        try {
+//            logins = new Scanner(new File(
+//                "hokiespa_username_and_password.txt"));
+//        }
+//        catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        String user = logins.nextLine();
+//        String pass = logins.nextLine();
+//
+//        WebElement username = driver.findElement(By.name("j_username"));
+//        WebElement password = driver.findElement(By.name("j_password"));
+//        WebElement login = driver.findElement(By.name("_eventId_proceed"));
+//        username.sendKeys(user);
+//        password.sendKeys(pass);
+//        login.click();
+//    }
 }
