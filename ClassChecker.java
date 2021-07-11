@@ -22,42 +22,51 @@ import org.openqa.selenium.support.ui.Select;
  *         an empty String.
  */
 public class ClassChecker {
-    public static WebDriver driver = null;
-    public static String classDepartment = "CS - Computer Science";
-    public static String classNumber = "2505";
-    public static String term = "Fall 2021";
-    public static String courseRegistrationNumber = "";
+    private WebDriver driver = null;
+    private String classDepartment;
+    private String classNumber;
+    private String term;
+    private String courseRegistrationNumber;
     // Don't change the openOnly variable
-    public static final String openOnly = "ONLY OPEN Sections";   
-    
+    private final String openOnly = "ONLY OPEN Sections";
+
     /*
      * Put the email you would like to receive an email reminder to here.
      */
-    public static final String email = "";
+    public String email;
 
     /**
      * 
      * Connects to the chrome driver, boots up chrome, navigates to the website,
      * and maximizes the window.
      */
-    public static void main(String[] args) {
+    public ClassChecker(
+        String classDepartment,
+        String classNumber,
+        String term,
+        String courseRegistrationNumber,
+        String email) {
+        this.classDepartment = classDepartment;
+        this.classNumber = classNumber;
+        this.term = term;
+        this.courseRegistrationNumber = courseRegistrationNumber;
+        this.email = email;
+
         System.setProperty("webdriver.chrome.driver",
             "C:\\Users\\Aniruthan Ramadoss\\chromedriver.exe");
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-
+        // Tells the driver to wait for a maximum of 15 seconds to wait for a
+        // web element to load.
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.navigate().to(
             "https://apps.es.vt.edu/ssb/HZSKVTSC.P_DispRequest");
         driver.manage().window().maximize();
         classCheck();
-        EmailSender completedTask = new EmailSender();
+        EmailSender completedTask = new EmailSender(this);
     }
 
 
-    /**
-     * Checks if the class in question is available.
-     */
-    public static void classCheck() {
+    private void classCheck() {
 
         WebElement semester = driver.findElement(By.name("TERMYEAR"));
         Select termSelector = new Select(semester);
@@ -85,7 +94,7 @@ public class ClassChecker {
         // The height of the table should be 16.0 if there are no classes
         // available.
         // If there is one class available, the height should be 46.0.
-        
+
         double numRows = 16.0;
         while (numRows == 16.0) {
             WebElement searchClass = driver.findElement(By.xpath(
@@ -108,10 +117,35 @@ public class ClassChecker {
     }
 
 
+    public String getClassDepartment() {
+        return classDepartment;
+    }
+
+
+    public String getClassNumber() {
+        return classNumber;
+    }
+
+
+    public String getTerm() {
+        return term;
+    }
+
+
+    public String getCourseRegistrationNumber() {
+        return courseRegistrationNumber;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+
     /**
      * Logs into VT. Not currently used but may be useful in the future.
      */
-    public static void login() {
+    public void login() {
         driver.navigate().to(
             "https://banweb.banner.vt.edu/ssomanager_prod/c/SSB");
         Scanner logins = null;
